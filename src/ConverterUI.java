@@ -4,13 +4,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ConverterUI extends JFrame {
+	private ButtonGroup modeSelection;
 	private JButton convertButton,clearButton;
 	private JComboBox<Unit> unit1ComboBox,unit2ComboBox;
 	private JLabel equalLabel;
 	private JPanel contents,changeModeContents;
+	private JRadioButton select1;
+	private JRadioButton select2;
 	private JTextField inputField1,inputField2;
 	private UnitConverter unitconverter;
-	//
 	
 	public ConverterUI(UnitConverter uc){
 		this.unitconverter = uc;
@@ -24,6 +26,8 @@ public class ConverterUI extends JFrame {
 		contents = new JPanel(new FlowLayout());
 		changeModeContents = new JPanel(new FlowLayout());
 		this.add(contents);
+		this.add(changeModeContents,BorderLayout.SOUTH);
+		
 		convertButton = new JButton("Convert!");
 		clearButton = new JButton("Clear");
 		unit1ComboBox = new JComboBox<Unit>(unitconverter.getUnits());
@@ -31,8 +35,13 @@ public class ConverterUI extends JFrame {
 		equalLabel = new JLabel("=");
 		inputField1 = new JTextField("",10);
 		inputField2 = new JTextField("",10);
-		//
-		//
+		inputField2.setEditable(false);
+		modeSelection = new ButtonGroup();
+		select1 = new JRadioButton("Left->Right");
+		select2 = new JRadioButton("Right->Left");
+		modeSelection.add(select1);
+		modeSelection.add(select2);
+
 		contents.add(inputField1);
 		contents.add(unit1ComboBox);
 		contents.add(equalLabel);
@@ -40,8 +49,16 @@ public class ConverterUI extends JFrame {
 		contents.add(unit2ComboBox);
 		contents.add(convertButton);
 		contents.add(clearButton);
-		ActionListener listener = new ConvertButtonListener();
-		convertButton.addActionListener(listener);
+		changeModeContents.add(select1);
+		changeModeContents.add(select2);
+		
+		inputField1.addActionListener(new ConvertButtonListener());
+		inputField2.addActionListener(new ConvertButtonListener());
+		convertButton.addActionListener(new ConvertButtonListener());
+		clearButton.addActionListener(new ClearButtonListener());
+		select1.addActionListener(new SelectedRadioButtonListener());
+		select2.addActionListener(new SelectedRadioButtonListener());
+		
 		this.pack();
 	}
 	public void run(){
@@ -50,19 +67,50 @@ public class ConverterUI extends JFrame {
 	
 	class ConvertButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent evt){
-			String s = inputField1.getText().trim();
+			String s = "";
+			if(select2.isSelected())
+				s = inputField2.getText().trim();
+			else
+				s = inputField1.getText().trim();
 			System.out.println("actionPerformed: input="+s);
 			if(s.length()>0){
 				try{
 					double value = Double.valueOf(s);
-					double result = unitconverter.convert(value,(Unit)unit1ComboBox.getSelectedItem(),(Unit)unit2ComboBox.getSelectedItem());
-					inputField2.setText(String.format("%.2f", result));
+					
+					if(select2.isSelected()){
+						double result = unitconverter.convert(value,(Unit)unit2ComboBox.getSelectedItem(),(Unit)unit1ComboBox.getSelectedItem());
+						inputField1.setText(String.format("%.2f", result));
+					}
+					else{
+						double result = unitconverter.convert(value,(Unit)unit1ComboBox.getSelectedItem(),(Unit)unit2ComboBox.getSelectedItem());
+						inputField2.setText(String.format("%.2f", result));
+					}
 				}
 				catch(Exception e){
-					JOptionPane.showMessageDialog(null,"Eggs are not supposed to be green.","A plain message",JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null,"Invalid number!!","Warning!",JOptionPane.PLAIN_MESSAGE);
 				}
 			}
+			else
+				JOptionPane.showMessageDialog(null,"Please input a number!","Warning!",JOptionPane.PLAIN_MESSAGE);
 		}
+	}
+	class ClearButtonListener implements ActionListener {
+		public void actionPerformed(ActionEvent evt){
+			inputField1.setText("");
+			inputField2.setText("");
+		}	
+	}
+	class SelectedRadioButtonListener implements ActionListener {
+		public void actionPerformed(ActionEvent evt){
+			if(select2.isSelected()){
+				inputField2.setEditable(true);
+				inputField1.setEditable(false);
+			}
+			else{
+				inputField1.setEditable(true);
+				inputField2.setEditable(false);
+			}
+		}	
 	}
 
 }
