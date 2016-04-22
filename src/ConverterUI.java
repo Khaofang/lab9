@@ -3,7 +3,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Unit Converter GUI class
+ * @author Chayanin Punjakunaporn
+ *
+ */
 public class ConverterUI extends JFrame {
+	/** Attribute */
 	private ButtonGroup modeSelection;
 	private JButton convertButton,clearButton;
 	private JComboBox<Unit> unit1ComboBox,unit2ComboBox;
@@ -14,14 +20,15 @@ public class ConverterUI extends JFrame {
 	private JTextField inputField1,inputField2;
 	private UnitConverter unitconverter;
 	
+	/** Constructor */
 	public ConverterUI(UnitConverter uc){
 		this.unitconverter = uc;
 		this.setTitle("Length Converter");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		initComponents();
 	}
+	/** Set initial components */
 	private void initComponents(){
-		//this.setLayout(new BoxLayout(null, BoxLayout.Y_AXIS));
 		this.setLayout(new BorderLayout());
 		contents = new JPanel(new FlowLayout());
 		changeModeContents = new JPanel(new FlowLayout());
@@ -61,10 +68,12 @@ public class ConverterUI extends JFrame {
 		
 		this.pack();
 	}
+	/** Run this GUI (Set window for seeing) */
 	public void run(){
 		this.setVisible(true);
 	}
 	
+	/** ActionListener of convertButton */
 	class ConvertButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent evt){
 			String s = "";
@@ -94,12 +103,14 @@ public class ConverterUI extends JFrame {
 				JOptionPane.showMessageDialog(null,"Please input a number!","Warning!",JOptionPane.PLAIN_MESSAGE);
 		}
 	}
+	/** ActionListener of clearButton */
 	class ClearButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent evt){
 			inputField1.setText("");
 			inputField2.setText("");
 		}	
 	}
+	/** ActionListener of select1 and select2 JRadioButton */
 	class SelectedRadioButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent evt){
 			if(select2.isSelected()){
