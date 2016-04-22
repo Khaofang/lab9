@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Unit Converter GUI class
+ * Unit Converter GUI Object class
  * @author Chayanin Punjakunaporn
  *
  */
@@ -29,12 +29,14 @@ public class ConverterUI extends JFrame {
 	}
 	/** Set initial components */
 	private void initComponents(){
+		/** Set layout in GUI */
 		this.setLayout(new BorderLayout());
 		contents = new JPanel(new FlowLayout());
 		changeModeContents = new JPanel(new FlowLayout());
 		this.add(contents);
 		this.add(changeModeContents,BorderLayout.SOUTH);
 		
+		/** Create all components */ 
 		convertButton = new JButton("Convert!");
 		clearButton = new JButton("Clear");
 		unit1ComboBox = new JComboBox<Unit>(unitconverter.getUnits());
@@ -49,6 +51,7 @@ public class ConverterUI extends JFrame {
 		modeSelection.add(select1);
 		modeSelection.add(select2);
 
+		/** Add all components to layouts */
 		contents.add(inputField1);
 		contents.add(unit1ComboBox);
 		contents.add(equalLabel);
@@ -59,6 +62,7 @@ public class ConverterUI extends JFrame {
 		changeModeContents.add(select1);
 		changeModeContents.add(select2);
 		
+		/** Make ActionListener to all components that must be used */
 		inputField1.addActionListener(new ConvertButtonListener());
 		inputField2.addActionListener(new ConvertButtonListener());
 		convertButton.addActionListener(new ConvertButtonListener());
