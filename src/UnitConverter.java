@@ -1,5 +1,6 @@
 /**
- * Unit converter class
+ * Convert the first unit to the second by the converter.
+ * Use unit from Unit interface.
  * @author Chayanin Punjakunaporn
  *
  */

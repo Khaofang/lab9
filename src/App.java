@@ -1,5 +1,6 @@
 /**
- * Application of Distance Converter of ConverterUI Class
+ * Running GUI by application.
+ * Use ConverterUI for running.
  * @author Chayanin Punjakunaporn
  *
  */

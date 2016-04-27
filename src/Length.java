@@ -1,5 +1,6 @@
 /**
- * Enum Length that implements Unit interface
+ * Collecting all of length unit.
+ * Value is in form of meter unit.
  * @author Chayanin Punjakunaporn
  *
  */

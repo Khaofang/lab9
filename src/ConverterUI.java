@@ -4,9 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Unit Converter GUI Object class
+ * Make GUI of Unit converter.
+ * Unit converter convert the first unit to the second.
+ * Converting can convert from left to right and from right to left.
+ * Show result of converting by clicking button "Convert!" and clear result by clicking button "Clear".
  * @author Chayanin Punjakunaporn
- *
  */
 public class ConverterUI extends JFrame {
 	/** Attribute */
@@ -21,14 +23,16 @@ public class ConverterUI extends JFrame {
 	private UnitConverter unitconverter;
 	
 	/** Constructor */
-	public ConverterUI(UnitConverter uc){
+	
+	public ConverterUI(UnitConverter uc) {
 		this.unitconverter = uc;
 		this.setTitle("Length Converter");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		initComponents();
 	}
+	
 	/** Set initial components */
-	private void initComponents(){
+	private void initComponents() {
 		/** Set layout in GUI */
 		this.setLayout(new BorderLayout());
 		contents = new JPanel(new FlowLayout());
@@ -72,6 +76,7 @@ public class ConverterUI extends JFrame {
 		
 		this.pack();
 	}
+	
 	/** Run this GUI (Set window for seeing) */
 	public void run(){
 		this.setVisible(true);
@@ -79,27 +84,27 @@ public class ConverterUI extends JFrame {
 	
 	/** ActionListener of convertButton */
 	class ConvertButtonListener implements ActionListener {
-		public void actionPerformed(ActionEvent evt){
+		public void actionPerformed(ActionEvent evt) {
 			String s = "";
 			if(select2.isSelected())
 				s = inputField2.getText().trim();
 			else
 				s = inputField1.getText().trim();
 			System.out.println("actionPerformed: input="+s);
-			if(s.length()>0){
-				try{
+			if(s.length()>0) {
+				try {
 					double value = Double.valueOf(s);
 					
 					if(select2.isSelected()){
 						double result = unitconverter.convert(value,(Unit)unit2ComboBox.getSelectedItem(),(Unit)unit1ComboBox.getSelectedItem());
 						inputField1.setText(String.format("%.2f", result));
 					}
-					else{
+					else {
 						double result = unitconverter.convert(value,(Unit)unit1ComboBox.getSelectedItem(),(Unit)unit2ComboBox.getSelectedItem());
 						inputField2.setText(String.format("%.2f", result));
 					}
 				}
-				catch(Exception e){
+				catch(Exception e) {
 					JOptionPane.showMessageDialog(null,"Invalid number!!","Warning!",JOptionPane.PLAIN_MESSAGE);
 				}
 			}
@@ -107,21 +112,23 @@ public class ConverterUI extends JFrame {
 				JOptionPane.showMessageDialog(null,"Please input a number!","Warning!",JOptionPane.PLAIN_MESSAGE);
 		}
 	}
+	
 	/** ActionListener of clearButton */
 	class ClearButtonListener implements ActionListener {
-		public void actionPerformed(ActionEvent evt){
+		public void actionPerformed(ActionEvent evt) {
 			inputField1.setText("");
 			inputField2.setText("");
 		}	
 	}
+	
 	/** ActionListener of select1 and select2 JRadioButton */
 	class SelectedRadioButtonListener implements ActionListener {
-		public void actionPerformed(ActionEvent evt){
-			if(select2.isSelected()){
+		public void actionPerformed(ActionEvent evt) {
+			if(select2.isSelected()) {
 				inputField2.setEditable(true);
 				inputField1.setEditable(false);
 			}
-			else{
+			else {
 				inputField1.setEditable(true);
 				inputField2.setEditable(false);
 			}

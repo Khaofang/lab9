@@ -1,5 +1,6 @@
 /**
- * Interface Unit
+ * Collect data about unit.
+ * Class that use this interface can call these method for get data.
  * @author Chayanin Punjakunaporn
  *
  */
